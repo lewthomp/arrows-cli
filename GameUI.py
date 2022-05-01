@@ -29,10 +29,12 @@ class GameUI:
     def _turnHandler(self):
         player = self._engine.turnTracker()
         remainder = self.target - self.scores[player]
+
         handInput = input(f"Player {player} has {remainder} remaining.\nenter hand > ")
-        print("## HAND INPUT:", type(handInput), handInput)
         validInput = self._validateInput(handInput)
+
         outcome = self._engine.scorer(player, validInput)
+
         if outcome == "BUST":
             print(f"Bust! Still {remainder} remaining")
         elif outcome == "SCORE":
@@ -45,27 +47,23 @@ class GameUI:
             print("## Something has gone very wrong in the turn handler.")
 
     def _validateInput(self, hand: str, throwNum: int) -> str:
-        print("## input received", hand)
-        validThrow = False
-
+        """ """
         throws = hand.split(" ")
-        for throw in throws:
-            if throw[0] not in ("s", "d", "t"):
-                print(
-                    f"Throw #{throwNum+1} is invalid: {throw}.\
-                    Throw must be prefixed by s, d or t."
-                )
-
-        while not validThrow:
-            if throw[0] not in ("s", "d", "t"):
-                print(
-                    f"Throw #{throwNum+1} is invalid: {throw}.\
-                    Throw must be prefixed by s, d or t."
-                )
-            # elif int(throw[1:])
-            # check number is valud
-            validThrow = True
-        #####
+        for i, throw in enumerate(throws):
+            validThrow = False
+            while not validThrow:
+                # check prefixed with s/d/t unless number is 25/50
+                if throw[0] not in ("s", "d", "t"):
+                    if throw not in ("25", "50"):
+                        print(
+                            f"\nThrow #{i+1} is invalid: {throw}.\
+                            Throw must be prefixed by s, d or t."
+                        )
+                        throw = input(f"\nReenter throw #{i+1}")
+                # check number in range (1,..,20)U(25,50)
+                elif int(throw[0:]) not in range(1, 21) and throw not in ("25", "50"):
+                    print("Invalid score entered as throw #{i}")
+                    throw = input(f"\nReenter throw #{i+1}")
 
     def _closer(self):
         return
