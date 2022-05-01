@@ -64,6 +64,9 @@ class GameUI:
                 elif int(throw[0:]) not in range(1, 21) and throw not in ("25", "50"):
                     print("Invalid score entered as throw #{i}")
                     throw = input(f"\nReenter throw #{i+1}")
+                else:
+                    validThrow = True
+        return
 
     def _closer(self):
         return
