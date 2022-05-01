@@ -1,8 +1,8 @@
 from typing import List
 import argparse
 
-from GameUI import GameUI
-from GameEngine import GameEngine
+from ui import GameUI
+from engine import GameEngine
 
 
 def startLobby():

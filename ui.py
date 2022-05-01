@@ -1,4 +1,4 @@
-from GameEngine import GameEngine
+from engine import GameEngine
 
 
 class GameUI:
